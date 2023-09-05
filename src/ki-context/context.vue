@@ -64,7 +64,7 @@ export default {
       return items;
     },
 
-    show (event, items){
+    show (event, items, pageType){
       this.items = this.parseFuncs(items);
       this.$nextTick(() => {
         let menu = document.getElementsByClassName('menu');
@@ -80,11 +80,21 @@ export default {
         }
 
         // compute menu position
-        if((menuWidth + event.pageX) >= window.innerWidth) {
-          menu.style.left = (event.pageX + 300 - menuWidth) + "px";
-        } 
+        if(pageType === 'formBuilder') {
+          if((menuWidth + event.pageX) >= window.innerWidth) {
+            menu.style.left = (event.pageX - menuWidth) + "px";
+          } 
+          else {
+            menu.style.left = event.pageX + "px";
+          }
+        }
         else {
-          menu.style.left = (event.pageX + 300) + "px";
+          if((menuWidth + event.pageX) >= window.innerWidth) {
+            menu.style.left = (event.pageX + 300 - menuWidth) + "px";
+          } 
+          else {
+            menu.style.left = (event.pageX + 300) + "px";
+          }
         }
         if((menuHeight + event.pageY) >= window.innerHeight) {
           menu.style.top = (event.pageY - menuHeight) + "px";
